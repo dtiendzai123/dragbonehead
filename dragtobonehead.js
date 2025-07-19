@@ -56,7 +56,10 @@ const weaponDragConfig = {
   m1887: { smooth: 1.2, snapRadius: 360, strongPullRadius: 450 },
   ak: { smooth: 0.8, snapRadius: 360, strongPullRadius: 400 }
 };
-
+const GamePackages = {
+  GamePackage1: "com.dts.freefireth",
+  GamePackage2: "com.dts.freefiremax"
+};
 // Hàm chính drag về phía head không vượt quá target, tăng lực hút theo weaponType
 
 function dragToBoneHead(
