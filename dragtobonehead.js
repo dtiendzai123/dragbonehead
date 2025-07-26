@@ -51,10 +51,10 @@ function sendInputToMouse({ deltaX, deltaY }) {
 
 // Tham số weaponDragConfig cho từng loại súng
 const weaponDragConfig = {
-  default: { smooth: 0.7, snapRadius: 360, strongPullRadius: 400 },
-  mp40: { smooth: 1.0, snapRadius: 360, strongPullRadius: 420 },
-  m1887: { smooth: 1.2, snapRadius: 360, strongPullRadius: 450 },
-  ak: { smooth: 0.8, snapRadius: 360, strongPullRadius: 400 }
+  default: { smooth: 0.001, snapRadius: 360, strongPullRadius: 400 },
+  mp40: { smooth: 0.001, snapRadius: 360, strongPullRadius: 420 },
+  m1887: { smooth: 0.001, snapRadius: 360, strongPullRadius: 450 },
+  ak: { smooth: 0.001, snapRadius: 360, strongPullRadius: 400 }
 };
 const GamePackages = {
   GamePackage1: "com.dts.freefireth",
@@ -84,12 +84,12 @@ function dragToBoneHead(
 
   // Cấu hình theo vũ khí
   const config = weaponDragConfig[weaponType] || weaponDragConfig["default"];
-  const sensitivity = config.sensitivity || { x: 0.52, y: 0.49 };
-  const maxPullSpeed = config.maxSpeed || 1.0;
-  const dragSmooth = config.smooth || 0.6;
-  const snapRadius = config.snapRadius || 0.07;
+  const sensitivity = config.sensitivity || { x: 0.001, y: 0.0001 };
+  const maxPullSpeed = config.maxSpeed || 999.0;
+  const dragSmooth = config.smooth || 0.001;
+  const snapRadius = config.snapRadius || 360.0;
   const strongPullRadius = config.strongPullRadius || 0.2;
-  const maxRadius = config.maxRadius || 0.03;
+  const maxRadius = config.maxRadius || 360.0;
 
   // Tính offset hiện tại từ crosshair → head
   const dx = headWorld.x - crosshair.x;
@@ -169,4 +169,4 @@ setInterval(() => {
 "m1887",// có thể là "ak", "m1887", ...
    "ump"
 );
-}, 16);
+}, 8);
