@@ -180,7 +180,7 @@ class VelocityPredictor {
     this.velocityHistory = [];
     this.accelerationHistory = [];
     this.historySize = historySize;
-    this.lastTime = performance.now();
+    this.lastUpdateTime = Date.now();
   }
 
   addPosition(position) {
@@ -305,6 +305,7 @@ const weaponDragConfig = {
 };
 
 // === Anti-Detection System ===
+
 class AntiDetectionSystem {
   constructor() {
     this.humanization = {
@@ -322,11 +323,11 @@ class AntiDetectionSystem {
     };
     
     this.behaviorPatterns = [];
-    this.lastAction = performance.now();
+    this.lastAction = Date.now(); // Sửa tại đây
   }
 
   addHumanization(deltaX, deltaY) {
-    const now = performance.now();
+    const now = Date.now(); // Sửa tại đây
     
     // Add reaction time delay
     const reactionDelay = this.humanization.reactionTime.min + 
@@ -378,42 +379,45 @@ class AntiDetectionSystem {
 }
 
 // === Performance Monitor ===
+
+// === Performance Monitor ===
 class PerformanceMonitor {
   constructor() {
     this.frameCount = 0;
-    this.lastFPSUpdate = performance.now();
+    this.lastFPSUpdate = Date.now(); // Sửa
     this.fps = 0;
     this.avgFrameTime = 0;
     this.frameTimes = [];
     this.maxFrameTimes = 60;
-    
+
     this.stats = {
       totalFrames: 0,
       totalAimTime: 0,
       successfulHits: 0,
       totalShots: 0,
-      accuracy: 0
+      accuracy: 0,
+      startTime: Date.now() // Thêm dòng này để dùng trong uptime
     };
   }
 
   startFrame() {
-    this.frameStart = performance.now();
+    this.frameStart = Date.now(); // Sửa
   }
 
   endFrame() {
-    const frameTime = performance.now() - this.frameStart;
+    const frameTime = Date.now() - this.frameStart; // Sửa
     this.frameTimes.push(frameTime);
-    
+
     if (this.frameTimes.length > this.maxFrameTimes) {
       this.frameTimes.shift();
     }
-    
+
     this.avgFrameTime = this.frameTimes.reduce((a, b) => a + b, 0) / this.frameTimes.length;
-    
+
     this.frameCount++;
     this.stats.totalFrames++;
-    
-    const now = performance.now();
+
+    const now = Date.now(); // Sửa
     if (now - this.lastFPSUpdate >= 1000) {
       this.fps = this.frameCount;
       this.frameCount = 0;
@@ -425,10 +429,11 @@ class PerformanceMonitor {
     return {
       fps: this.fps,
       avgFrameTime: this.avgFrameTime.toFixed(2) + 'ms',
-      accuracy: this.stats.totalShots > 0 ? 
-                ((this.stats.successfulHits / this.stats.totalShots) * 100).toFixed(1) + '%' : '0%',
+      accuracy: this.stats.totalShots > 0
+        ? ((this.stats.successfulHits / this.stats.totalShots) * 100).toFixed(1) + '%'
+        : '0%',
       totalFrames: this.stats.totalFrames,
-      uptime: ((performance.now() - this.stats.startTime) / 1000).toFixed(1) + 's'
+      uptime: ((Date.now() - this.stats.startTime) / 1000).toFixed(1) + 's' // Sửa
     };
   }
 }
