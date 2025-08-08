@@ -1,4 +1,7 @@
+let body = $response.body;
 
+// Nếu là JSON thì parse thử
+try { body = JSON.parse($response.body); } catch (e) {}
 // === Enhanced Vector3 với Performance Optimization ===
 class Vector3 {
   constructor(x = 0, y = 0, z = 0) { 
@@ -680,4 +683,9 @@ function selectBestTarget() {
   }
 
   return bestEnemy;
+}
+if (typeof body === "object") {
+  $done({ body: JSON.stringify(body) });
+} else {
+  $done({ body });
 }
